@@ -12,6 +12,8 @@ export class QuestionComponent implements OnInit {
   selectedItem: boolean = false;
   disabledPrevButton: boolean = false;
   disabledNextButton: boolean = false;
+  progressBarPercentage:number = 0;
+  Math:Math;
 
   // selectedItem:boolean = false;
 
@@ -22,6 +24,7 @@ export class QuestionComponent implements OnInit {
     if (this.currentQuestionIndex <= 0) {
       this.disabledPrevButton = true;
     }
+    this.progressBarPercentage = ((this.currentQuestionIndex+1)*100 / this.questions.length);
 
   }
 
@@ -35,6 +38,7 @@ export class QuestionComponent implements OnInit {
       this.disabledNextButton = true;
     }
     this.disabledPrevButton = false;
+    this.progressBarPercentage = ((this.currentQuestionIndex+1)*100 / this.questions.length);
   }
   prev() {
     this.currentQuestionIndex--;
@@ -42,6 +46,7 @@ export class QuestionComponent implements OnInit {
     if ((this.currentQuestionIndex) <= 0) {
       this.disabledPrevButton = true;
     }
+    this.progressBarPercentage = ((this.currentQuestionIndex+1)*100 / this.questions.length);
 
   }
 

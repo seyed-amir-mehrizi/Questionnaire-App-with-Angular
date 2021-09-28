@@ -1,4 +1,4 @@
-<div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+<div class="d-flex flex-column justify-content-center align-items-center w-100 h-75">
     <h2>
         Question {{currentQuestionIndex + 1 }}
     </h2>
@@ -24,29 +24,31 @@
             </div>
         </span>
     </span>
+</div>
 
+<div class="d-flex justify-content-between w-100 mt-3">
+    <div>
+        <button class="mx-5" (click)="prev()" [disabled]="disabledPrevButton">
+            prev
+        </button>
+    </div>
+    <div class="w-100">
+        <div class="d-flex flex-column w-100 text-center">
+            <div>
+                <h6>
+                    {{currentQuestionIndex + 1 }} / {{questions.length}}
+                </h6>
+            </div>
+            <div class="text-center">
+                <p><ngb-progressbar type="success" [value]="progressBarPercentage"></ngb-progressbar></p>
 
-    <div class="d-flex justify-content-between w-100 mt-3">
-        <div>
-            <button class="mx-5" (click)="prev()" [disabled]="disabledPrevButton">
-                prev
-            </button>
-        </div>
-        <div>
-            <h6>
-                {{currentQuestionIndex + 1 }} / {{questions.length}}
-            </h6>
-        </div>
-        <div>
-
-            <button class="mx-5" (click)="next()" [disabled]="disabledNextButton">
-                next
-            </button>
+            </div>
         </div>
     </div>
+    <div>
 
-
-
-
-
+        <button class="mx-5" (click)="next()" [disabled]="disabledNextButton">
+            next
+        </button>
+    </div>
 </div>
