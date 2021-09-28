@@ -6,29 +6,40 @@
     <h3>
         {{question.headline}}
     </h3>
-    <div class="card w-50 p-1 my-1" *ngFor="let item of question.choices; let i=index">
-        <div class="card-body py-1">
-            <label class="form-check-label" for="{{i}}">
-                <input type="radio" class="form-check-input" id="{{i}}" name="optradio"
-                    value="{{item.value}}">{{item.label}}
-            </label>
-        </div>
-    </div>
+    <span [ngSwitch]="question.question_type" class="w-50">
+        <span *ngSwitchCase="'multiple-choice'" class="w-50">
+            <div class="card w-100 p-1 my-1" *ngFor="let item of question.choices; let i=index">
+                <div class="card-body py-1">
+                    <label class="form-check-label" for="{{i}}">
+                        <input type="radio" class="form-check-input" id="{{i}}" name="optradio"
+                            (change)="onItemChange(i)" [checked]="item.selected" value="{{item.value}}">{{item.label}}
+                    </label>
+                </div>
+            </div>
+        </span>
+        <span *ngSwitchCase="'text'">
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+            </div>
+        </span>
+    </span>
+
 
     <div class="d-flex justify-content-between w-100 mt-3">
         <div>
-            <button class="mx-5" (click)="prev()">
+            <button class="mx-5" (click)="prev()" [disabled]="disabledPrevButton">
                 prev
             </button>
         </div>
         <div>
-                <h6>
-                    {{currentQuestionIndex + 1 }} / {{questions.length}}
-                </h6>
+            <h6>
+                {{currentQuestionIndex + 1 }} / {{questions.length}}
+            </h6>
         </div>
         <div>
 
-            <button  class="mx-5" (click)="next()">
+            <button class="mx-5" (click)="next()" [disabled]="disabledNextButton">
                 next
             </button>
         </div>

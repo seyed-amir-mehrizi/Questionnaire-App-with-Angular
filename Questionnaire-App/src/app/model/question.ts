@@ -1,6 +1,7 @@
 
 
 export interface Questionnaire {
+
     category_name_hyphenated: string;
     description: string;
     id: number;
@@ -18,7 +19,7 @@ export interface Questions {
     description: string;
     jumps: Jumps[];
     choices: Choices[];
-}
+}[]
 
 export interface Jumps {
     destination:{id : number};

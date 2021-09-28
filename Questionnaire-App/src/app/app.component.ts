@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Questionnaire } from './model/question';
 import { QuestionsService } from './service/questions.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { QuestionsService } from './service/questions.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  allQuestionsInfo:any =[]; 
+  allQuestionsInfo:any[]; 
   listOfQuestions:any=[];
   questionnaireDescription:string = '';
   questionnaireName:string = '';
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit {
     this.listOfQuestions = this.questionService.getListOfQuestions()[0].questionnaire.questions;
     this.questionnaireDescription =  this.allQuestionsInfo[0].questionnaire.description;
     this.questionnaireName =  this.allQuestionsInfo[0].questionnaire.name;
+    console.log("this.allQuestionsInfo : " , this.allQuestionsInfo);
+    
   }
-  title = 'Questionnaire-App';
+
 }
