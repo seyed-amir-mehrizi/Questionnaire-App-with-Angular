@@ -1,14 +1,14 @@
-<div class="d-flex flex-column justify-content-center align-items-center w-100 h-75">
-    <h2>
+<div  class="d-flex flex-column justify-content-center align-items-center w-100 h-75" >
+    <h6>
         Question {{currentQuestionIndex + 1 }}
-    </h2>
+    </h6>
 
-    <h3>
+    <h4 class="text-center">
         {{question.headline}}
-    </h3>
+    </h4>
     <span [ngSwitch]="question.question_type" class="w-50">
         <span *ngSwitchCase="'multiple-choice'" class="w-50">
-            <div class="card w-100 p-1 my-1" *ngFor="let item of question.choices; let i=index">
+            <div class="card w-100 p-1 my-2" *ngFor="let item of question.choices; let i=index">
                 <div class="card-body py-1">
                     <label class="form-check-label" for="{{i}}">
                         <input type="radio" class="form-check-input" id="{{i}}" name="optradio"
@@ -19,7 +19,6 @@
         </span>
         <span *ngSwitchCase="'text'">
             <div class="form-group">
-                <label for="comment">Comment:</label>
                 <textarea class="form-control" rows="5" id="comment"></textarea>
             </div>
         </span>
@@ -28,8 +27,8 @@
 
 <div class="d-flex justify-content-between w-100 mt-3">
     <div>
-        <button class="mx-5" (click)="prev()" [disabled]="disabledPrevButton">
-            prev
+        <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="prev()" [disabled]="disabledPrevButton">
+            <i class="fa fa-arrow-left"></i>
         </button>
     </div>
     <div class="w-100">
@@ -47,8 +46,8 @@
     </div>
     <div>
 
-        <button class="mx-5" (click)="next()" [disabled]="disabledNextButton">
-            next
+        <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="next()" [disabled]="disabledNextButton">
+            <i class="fa fa-arrow-right"></i>
         </button>
     </div>
 </div>
