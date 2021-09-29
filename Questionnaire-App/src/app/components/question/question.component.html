@@ -1,53 +1,48 @@
-<div  class="d-flex flex-column justify-content-center align-items-center w-100 h-75" >
-    <h6>
-        Question {{currentQuestionIndex + 1 }}
-    </h6>
-
-    <h4 class="text-center">
-        {{question.headline}}
-    </h4>
-    <span [ngSwitch]="question.question_type" class="w-50">
-        <span *ngSwitchCase="'multiple-choice'" class="w-50">
-            <div class="card w-100 p-1 my-2" *ngFor="let item of question.choices; let i=index">
-                <div class="card-body py-1">
-                    <label class="form-check-label" for="{{i}}">
-                        <input type="radio" class="form-check-input" id="{{i}}" name="optradio"
-                            (change)="onItemChange(i)" [checked]="item.selected" value="{{item.value}}">{{item.label}}
-                    </label>
-                </div>
+<div class="d-flex flex-column justify-content-center align-items-center w-100 h-75">
+    <div class="card w-50 h-50">
+        <div class="card-header bg-white d-flex justify-content-between">
+            <div class="font-weight-bold">
+                {{question.headline}}
             </div>
-        </span>
-        <span *ngSwitchCase="'text'">
-            <div class="form-group">
-                <textarea class="form-control" rows="5" id="comment"></textarea>
-            </div>
-        </span>
-    </span>
-</div>
-
-<div class="d-flex justify-content-between w-100 mt-3">
-    <div>
-        <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="prev()" [disabled]="disabledPrevButton">
-            <i class="fa fa-arrow-left"></i>
-        </button>
-    </div>
-    <div class="w-100">
-        <div class="d-flex flex-column w-100 text-center">
             <div>
-                <h6>
-                    {{currentQuestionIndex + 1 }} / {{questions.length}}
-                </h6>
-            </div>
-            <div class="text-center">
-                <p><ngb-progressbar type="success" [value]="progressBarPercentage"></ngb-progressbar></p>
-
+                {{currentQuestionIndex + 1 }} / {{questions.length}}
             </div>
         </div>
+        <div class="card-body h-100 w-100">
+            <span [ngSwitch]="question.question_type" class="w-50">
+                <span *ngSwitchCase="'multiple-choice'" class="w-50">
+                    <div class="w-100 p-1 my-2" *ngFor="let item of question.choices; let i=index">
+                        <div class="card-body py-1">
+                            <label class="form-check-label" for="{{i}}">
+                                <input type="radio" class="form-check-input" id="{{i}}" name="optradio"
+                                    (change)="onItemChange(i)" [checked]="item.selected"
+                                    value="{{item.value}}">{{item.label}}
+                            </label>
+                        </div>
+                    </div>
+                </span>
+                <span *ngSwitchCase="'text'">
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+                </span>
+            </span>
+        </div>
     </div>
-    <div>
+    <div class="w-50 mt-5 d-flex justify-content-between align-items-center">
+        <div>
+            <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="prev()" [disabled]="disabledPrevButton">
+                <i class="fa fa-arrow-left"></i>
+            </button>
+        </div>
+        <div class="w-100">
+                <ngb-progressbar type="success" [value]="progressBarPercentage"></ngb-progressbar>
+        </div>
+        <div>
 
-        <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="next()" [disabled]="disabledNextButton">
-            <i class="fa fa-arrow-right"></i>
-        </button>
+            <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="next()" [disabled]="disabledNextButton">
+                <i class="fa fa-arrow-right"></i>
+            </button>
+        </div>
     </div>
 </div>
