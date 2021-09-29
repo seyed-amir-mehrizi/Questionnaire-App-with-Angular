@@ -1,9 +1,7 @@
 
-
+import { from, Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { QuestionsService } from './questions.service';
-
-
 
 
 describe('QuestionsService', () => {
@@ -16,8 +14,16 @@ describe('QuestionsService', () => {
   });
 
   it('should get All questions form the service ', () => {
-    // spyOn(service, 'getListOfQuestions').and.callFake(() => {
-    //   return Observable.of([[1,2,3]])
-    // });
+    let questionsList = [
+      {id : 1 , title:'test 1'},
+      {id : 2 , title:'test 2'},
+      {id : 3 , title:'test 3'}
+    ]
+    spyOn(service, 'getListOfQuestions').and.callFake((): any => {
+      return from([questionsList]);
+    });
+    component.ngOnInit();
+    expect(component.allQuestionsInfo.length).toBeGreaterThan(0);
   });
+  
 });
