@@ -1,16 +1,23 @@
-import { TestBed } from '@angular/core/testing';
 
+
+import { AppComponent } from '../app.component';
 import { QuestionsService } from './questions.service';
+
+
+
 
 describe('QuestionsService', () => {
   let service: QuestionsService;
+  let component: AppComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(QuestionsService);
+    service = new QuestionsService();
+    component = new AppComponent(service);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should get All questions form the service ', () => {
+    // spyOn(service, 'getListOfQuestions').and.callFake(() => {
+    //   return Observable.of([[1,2,3]])
+    // });
   });
 });

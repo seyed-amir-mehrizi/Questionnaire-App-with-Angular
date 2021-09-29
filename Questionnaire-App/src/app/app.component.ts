@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Question, Questionnaire, RootObject } from './model/question';
+import { Question, RootObject } from './model/question';
 import { QuestionsService } from './service/questions.service';
 
 @Component({
@@ -16,10 +16,17 @@ export class AppComponent implements OnInit {
   constructor(private questionService : QuestionsService){
   }
   ngOnInit(): void {
-    this.allQuestionsInfo = this.questionService.getListOfQuestions();
-    this.listOfQuestions = this.questionService.getListOfQuestions()[0].questionnaire.questions;
-    this.questionnaireDescription =  this.allQuestionsInfo[0].questionnaire.description;
-    this.questionnaireName =  this.allQuestionsInfo[0].questionnaire.name;    
+    this.getListOfAllQuestions();
+  }
+
+  getListOfAllQuestions(){
+    this.questionService.getListOfQuestions()
+    .subscribe((result:any)=>{
+     this.allQuestionsInfo = result;
+     this.listOfQuestions = result.questionnaire.questions;
+     this.questionnaireDescription =   result.questionnaire.description;
+     this.questionnaireName =   result.questionnaire.name;  
+    });
   }
 
 }
