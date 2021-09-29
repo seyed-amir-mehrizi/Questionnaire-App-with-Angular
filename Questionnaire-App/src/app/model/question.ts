@@ -1,38 +1,49 @@
 
 
-export interface Questionnaire {
+    export interface Choice {
+        label: string;
+        value: string;
+        selected: boolean;
+    }
 
-    category_name_hyphenated: string;
-    description: string;
-    id: number;
-    identifier: string;
-    name: string;
-    questions: Questions[]
-}
+    export interface Condition {
+        field: string;
+        value: string;
+    }
 
-export interface Questions {
-    required: boolean;
-    question_type: string;
-    multiple: string;
-    identifier: string;
-    headline: string;
-    description: string;
-    jumps: Jumps[];
-    choices: Choices[];
-}[]
+    export interface Destination {
+        id: string;
+    }
 
-export interface Jumps {
-    destination:{id : number};
-    conditions:Conditions[];
-}
+    export interface Jump {
+        conditions: Condition[];
+        destination: Destination;
+    }
 
-export interface Choices {
-    label: string;
-    selected: boolean;
-    value: string;
-}
+    export interface Question {
+        question_type: string;
+        identifier: string;
+        headline: string;
+        description?: any;
+        required: boolean;
+        multiple: string;
+        choices: Choice[];
+        jumps: Jump[];
+        multiline: string;
+    }
 
-export interface Conditions{
-    field:string;
-    value:string;
-}
+    export interface Questionnaire {
+        id: number;
+        identifier: string;
+        name: string;
+        questions: Question[];
+        description: string;
+        category_name_hyphenated: string;
+    }
+
+    export interface RootObject {
+        questionnaire: Questionnaire;
+    }
+
+
+

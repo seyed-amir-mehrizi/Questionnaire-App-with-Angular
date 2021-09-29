@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Questions } from 'src/app/model/question';
+import { Question } from 'src/app/model/question';
+
 
 @Component({
   selector: 'app-question',
@@ -7,7 +8,7 @@ import { Questions } from 'src/app/model/question';
   styleUrls: ['./question.component.css']
 })
 export class QuestionComponent implements OnInit {
-  @Input() questions: any;
+  @Input() questions: Question[];
   currentQuestionIndex: number = 0;
   selectedItem: boolean = false;
   disabledPrevButton: boolean = false;
@@ -20,7 +21,6 @@ export class QuestionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.questions);
     if (this.currentQuestionIndex <= 0) {
       this.disabledPrevButton = true;
     }
