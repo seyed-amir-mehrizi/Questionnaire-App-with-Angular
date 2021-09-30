@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Question, Choice } from 'src/app/model/question';
 
@@ -19,18 +19,14 @@ export class QuestionComponent implements OnInit {
   textDescription: string = '';
   hasConfirmedButton: boolean = false;
 
-  // selectedItem:boolean = false;
-
   constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
     if (this.currentQuestionIndex <= 0) {
       this.disabledPrevButton = true;
     }
-    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
-
+    this.calculateProgressBarPercentage();
   }
-
   get question() {
     return this.questions[this.currentQuestionIndex]
   }
@@ -39,7 +35,15 @@ export class QuestionComponent implements OnInit {
     this.currentQuestionIndex++;
     this.disabledPrevButton = false;
     this.disabledNextButton = true;
-    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
+    if ((this.currentQuestionIndex + 1) === this.questions.length) {
+      this.disabledNextButton = true;
+    }
+    this.checkQuestionType(question , choices);
+    this.calculateProgressBarPercentage();
+
+  }
+
+  checkQuestionType(question:Question , choices: Choice[]){
     if (question.question_type === 'multiple-choice') {
       choices.forEach(choice => {
         if (choice.selected === true) {
@@ -49,10 +53,6 @@ export class QuestionComponent implements OnInit {
     } else if (question.question_type === 'text') {
       this.disabledNextButton = false;
     }
-    if ((this.currentQuestionIndex + 1) === this.questions.length) {
-      this.disabledNextButton = true;
-    }
-    this.hasConfirmedButton = false;
   }
   prev() {
     this.currentQuestionIndex--;
@@ -60,25 +60,25 @@ export class QuestionComponent implements OnInit {
     if ((this.currentQuestionIndex) <= 0) {
       this.disabledPrevButton = true;
     }
-    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
-    this.hasConfirmedButton = false;
-
-
+    this.calculateProgressBarPercentage();
   }
 
   onItemChange(index) {
     this.questions[this.currentQuestionIndex].choices[index].selected = true;
     this.disabledNextButton = false;
-
   }
 
   changeContextInInput(question, value) {
     this.textDescription = value;
+    this.setValueForDescription(question, value);
+    this.dispalyConfirmedButton();
+  }
+
+  setValueForDescription(question: Question, value: string) {
     const foundedObject = this.questions.findIndex((item) => {
       return item.identifier === question.identifier;
     });
     this.questions[foundedObject].description = value;
-    this.dispalyConfirmedButton();
   }
 
   confirmQuestionnaire() {
@@ -88,10 +88,12 @@ export class QuestionComponent implements OnInit {
     }, 3000);
 
   }
-
   dispalyConfirmedButton() {
     if ((this.currentQuestionIndex + 1) === this.questions.length) {
       this.hasConfirmedButton = true;
     }
+  }
+  calculateProgressBarPercentage(): void {
+    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
   }
 }
