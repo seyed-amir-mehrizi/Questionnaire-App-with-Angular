@@ -94,6 +94,6 @@ export class QuestionComponent implements OnInit {
     }
   }
   calculateProgressBarPercentage(): void {
-    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
+    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions?.length);
   }
 }
