@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import {  Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Question, Choice } from 'src/app/model/question';
 
 
@@ -15,10 +17,11 @@ export class QuestionComponent implements OnInit {
   disabledNextButton: boolean = true;
   progressBarPercentage: number = 0;
   textDescription: string = '';
+  hasConfirmedButton: boolean = false;
 
   // selectedItem:boolean = false;
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
     if (this.currentQuestionIndex <= 0) {
@@ -32,24 +35,24 @@ export class QuestionComponent implements OnInit {
     return this.questions[this.currentQuestionIndex]
   }
 
-  next(question:Question , choices: Choice[]) {
-
+  next(question: Question, choices: Choice[]) {
     this.currentQuestionIndex++;
     this.disabledPrevButton = false;
     this.disabledNextButton = true;
     this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
-    if(question.question_type === 'multiple-choice'){
+    if (question.question_type === 'multiple-choice') {
       choices.forEach(choice => {
         if (choice.selected === true) {
           this.disabledNextButton = false;
         }
       })
-    }else if(question.question_type === 'text'){
+    } else if (question.question_type === 'text') {
       this.disabledNextButton = false;
     }
     if ((this.currentQuestionIndex + 1) === this.questions.length) {
       this.disabledNextButton = true;
     }
+    this.hasConfirmedButton = false;
   }
   prev() {
     this.currentQuestionIndex--;
@@ -58,6 +61,7 @@ export class QuestionComponent implements OnInit {
       this.disabledPrevButton = true;
     }
     this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
+    this.hasConfirmedButton = false;
 
 
   }
@@ -74,9 +78,20 @@ export class QuestionComponent implements OnInit {
       return item.identifier === question.identifier;
     });
     this.questions[foundedObject].description = value;
+    this.dispalyConfirmedButton();
   }
 
-  confirmText() {
+  confirmQuestionnaire() {
+    this.toastr.success("Congrate , You finish the Questionnaire ....");
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
 
+  }
+
+  dispalyConfirmedButton() {
+    if ((this.currentQuestionIndex + 1) === this.questions.length) {
+      this.hasConfirmedButton = true;
+    }
   }
 }
