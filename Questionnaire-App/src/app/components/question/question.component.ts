@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Question } from 'src/app/model/question';
+import { Question, Choice } from 'src/app/model/question';
 
 
 @Component({
@@ -12,9 +12,9 @@ export class QuestionComponent implements OnInit {
   currentQuestionIndex: number = 0;
   selectedItem: boolean = false;
   disabledPrevButton: boolean = false;
-  disabledNextButton: boolean = false;
-  progressBarPercentage:number = 0;
-  textDescription:string = '';
+  disabledNextButton: boolean = true;
+  progressBarPercentage: number = 0;
+  textDescription: string = '';
 
   // selectedItem:boolean = false;
 
@@ -24,7 +24,7 @@ export class QuestionComponent implements OnInit {
     if (this.currentQuestionIndex <= 0) {
       this.disabledPrevButton = true;
     }
-    this.progressBarPercentage = ((this.currentQuestionIndex+1)*100 / this.questions.length);
+    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
 
   }
 
@@ -32,13 +32,24 @@ export class QuestionComponent implements OnInit {
     return this.questions[this.currentQuestionIndex]
   }
 
-  next() {
+  next(question:Question , choices: Choice[]) {
+
     this.currentQuestionIndex++;
+    this.disabledPrevButton = false;
+    this.disabledNextButton = true;
+    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
+    if(question.question_type === 'multiple-choice'){
+      choices.forEach(choice => {
+        if (choice.selected === true) {
+          this.disabledNextButton = false;
+        }
+      })
+    }else if(question.question_type === 'text'){
+      this.disabledNextButton = false;
+    }
     if ((this.currentQuestionIndex + 1) === this.questions.length) {
       this.disabledNextButton = true;
     }
-    this.disabledPrevButton = false;
-    this.progressBarPercentage = ((this.currentQuestionIndex+1)*100 / this.questions.length);
   }
   prev() {
     this.currentQuestionIndex--;
@@ -46,23 +57,26 @@ export class QuestionComponent implements OnInit {
     if ((this.currentQuestionIndex) <= 0) {
       this.disabledPrevButton = true;
     }
-    this.progressBarPercentage = ((this.currentQuestionIndex+1)*100 / this.questions.length);
+    this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions.length);
+
 
   }
 
   onItemChange(index) {
     this.questions[this.currentQuestionIndex].choices[index].selected = true;
+    this.disabledNextButton = false;
+
   }
 
-  changeContextInInput(question , value){
+  changeContextInInput(question, value) {
     this.textDescription = value;
-   const foundedObject =  this.questions.findIndex((item)=>{
+    const foundedObject = this.questions.findIndex((item) => {
       return item.identifier === question.identifier;
     });
     this.questions[foundedObject].description = value;
   }
 
-  confirmText(){
+  confirmText() {
 
   }
 }

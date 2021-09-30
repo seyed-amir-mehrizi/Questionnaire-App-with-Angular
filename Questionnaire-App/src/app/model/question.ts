@@ -24,7 +24,7 @@
         question_type: string;
         identifier: string;
         headline: string;
-        description?: any;
+        description?: string;
         required: boolean;
         multiple: string;
         choices: Choice[];

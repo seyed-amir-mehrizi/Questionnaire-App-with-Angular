@@ -41,7 +41,7 @@
         </div>
         <div>
 
-            <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="next()" [disabled]="disabledNextButton">
+            <button class="btn btn-secondary btn-rounded btn-sm mx-5" (click)="next(questions[this.currentQuestionIndex+1] , questions[this.currentQuestionIndex+1].choices)" [disabled]="disabledNextButton">
                 <i class="fa fa-arrow-right"></i>
             </button>
         </div>
