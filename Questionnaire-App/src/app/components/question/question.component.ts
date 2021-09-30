@@ -63,12 +63,12 @@ export class QuestionComponent implements OnInit {
     this.calculateProgressBarPercentage();
   }
 
-  onItemChange(index) {
+  onItemChange(index:number) {
     this.questions[this.currentQuestionIndex].choices[index].selected = true;
     this.disabledNextButton = false;
   }
 
-  changeContextInInput(question, value) {
+  changeContextInInput(question: Question, value: string) {
     this.textDescription = value;
     this.setValueForDescription(question, value);
     this.dispalyConfirmedButton();
