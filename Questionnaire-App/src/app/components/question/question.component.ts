@@ -14,7 +14,7 @@ export class QuestionComponent implements OnInit {
   disabledPrevButton: boolean = false;
   disabledNextButton: boolean = false;
   progressBarPercentage:number = 0;
-  Math:Math;
+  textDescription:string = '';
 
   // selectedItem:boolean = false;
 
@@ -54,5 +54,15 @@ export class QuestionComponent implements OnInit {
     this.questions[this.currentQuestionIndex].choices[index].selected = true;
   }
 
+  changeContextInInput(question , value){
+    this.textDescription = value;
+   const foundedObject =  this.questions.findIndex((item)=>{
+      return item.identifier === question.identifier;
+    });
+    this.questions[foundedObject].description = value;
+  }
 
+  confirmText(){
+
+  }
 }

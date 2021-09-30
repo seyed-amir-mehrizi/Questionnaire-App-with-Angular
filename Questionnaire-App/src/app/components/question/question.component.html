@@ -23,7 +23,8 @@
                 </span>
                 <span *ngSwitchCase="'text'">
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                        <textarea class="form-control" rows="5" (keyup)="changeContextInInput(question , $event.target.value)"
+                            id="comment" value={{questions[this.currentQuestionIndex].description}}></textarea>
                     </div>
                 </span>
             </span>
@@ -36,7 +37,7 @@
             </button>
         </div>
         <div class="w-100">
-                <ngb-progressbar type="success" [value]="progressBarPercentage"></ngb-progressbar>
+            <ngb-progressbar type="success" [value]="progressBarPercentage"></ngb-progressbar>
         </div>
         <div>
 
