@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Question, Choice } from 'src/app/model/question';
@@ -18,6 +18,8 @@ export class QuestionComponent implements OnInit {
   progressBarPercentage: number = 0;
   textDescription: string = '';
   hasConfirmedButton: boolean = false;
+  isNextSlide:boolean = false;
+  @ViewChild('cardContainer', { read: ElementRef, static:false }) namebutton: ElementRef;
 
   constructor(private toastr: ToastrService) { }
 
@@ -32,6 +34,7 @@ export class QuestionComponent implements OnInit {
   }
 
   next(question: Question, choices: Choice[]) {
+    this.isNextSlide =true;
     this.currentQuestionIndex++;
     this.disabledPrevButton = false;
     this.disabledNextButton = true;
@@ -40,7 +43,7 @@ export class QuestionComponent implements OnInit {
     }
     this.checkQuestionType(question , choices);
     this.calculateProgressBarPercentage();
-
+    this.setupForAnimation();
   }
 
   checkQuestionType(question:Question , choices: Choice[]){
@@ -61,6 +64,7 @@ export class QuestionComponent implements OnInit {
       this.disabledPrevButton = true;
     }
     this.calculateProgressBarPercentage();
+    this.setupForAnimation();
   }
 
   onItemChange(index:number) {
@@ -95,5 +99,12 @@ export class QuestionComponent implements OnInit {
   }
   calculateProgressBarPercentage(): void {
     this.progressBarPercentage = ((this.currentQuestionIndex + 1) * 100 / this.questions?.length);
+  }
+
+  setupForAnimation(){
+    this.namebutton.nativeElement.classList.add('slide_next')
+    setTimeout(() => {
+      this.namebutton.nativeElement.classList.remove('slide_next')
+    }, 1000);
   }
 }

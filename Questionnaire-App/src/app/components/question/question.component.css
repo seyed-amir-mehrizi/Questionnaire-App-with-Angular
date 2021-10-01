@@ -12,3 +12,32 @@
       display: none;
     }
   }
+
+  .slide_next{
+    animation: slideNext 0.7s ease-in;
+  }
+
+  @keyframes slideNext {
+    
+    0%{
+      transform: skewX(53deg) translateX(-500px);
+    }
+    60%{
+      transform:translateX(0px);
+      
+    }
+    62%{
+      transform:skewX(0deg) translateX(30px); 
+
+    }
+    70%{
+      transform: skew(-20deg);
+    }
+    80%{
+      transform: skew(0deg) translate(0);
+    }
+    100%{
+      transform: skewX(0deg);
+
+    }
+  }
