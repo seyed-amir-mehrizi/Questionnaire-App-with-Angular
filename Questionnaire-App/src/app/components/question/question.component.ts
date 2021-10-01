@@ -13,28 +13,22 @@ export class QuestionComponent implements OnInit {
   @Input() questions: Question[];
   currentQuestionIndex: number = 0;
   selectedItem: boolean = false;
-  disabledPrevButton: boolean = false;
+  disabledPrevButton: boolean = true;
   disabledNextButton: boolean = true;
   progressBarPercentage: number = 0;
   textDescription: string = '';
   hasConfirmedButton: boolean = false;
-  isNextSlide:boolean = false;
   @ViewChild('cardContainer', { read: ElementRef, static:false }) namebutton: ElementRef;
 
   constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    if (this.currentQuestionIndex <= 0) {
-      this.disabledPrevButton = true;
-    }
-    this.calculateProgressBarPercentage();
   }
   get question() {
     return this.questions[this.currentQuestionIndex]
   }
 
   next(question: Question, choices: Choice[]) {
-    this.isNextSlide =true;
     this.currentQuestionIndex++;
     this.disabledPrevButton = false;
     this.disabledNextButton = true;
@@ -45,6 +39,16 @@ export class QuestionComponent implements OnInit {
     this.calculateProgressBarPercentage();
     this.setupForAnimation();
   }
+  prev() {
+    this.currentQuestionIndex--;
+    this.disabledNextButton = false;
+    if ((this.currentQuestionIndex) <= 0) {
+      this.disabledPrevButton = true;
+    }
+    this.calculateProgressBarPercentage();
+    this.setupForAnimation();
+  }
+
 
   checkQuestionType(question:Question , choices: Choice[]){
     if (question.question_type === 'multiple-choice') {
@@ -57,15 +61,7 @@ export class QuestionComponent implements OnInit {
       this.disabledNextButton = false;
     }
   }
-  prev() {
-    this.currentQuestionIndex--;
-    this.disabledNextButton = false;
-    if ((this.currentQuestionIndex) <= 0) {
-      this.disabledPrevButton = true;
-    }
-    this.calculateProgressBarPercentage();
-    this.setupForAnimation();
-  }
+
 
   onItemChange(index:number) {
     this.questions[this.currentQuestionIndex].choices[index].selected = true;
@@ -86,7 +82,7 @@ export class QuestionComponent implements OnInit {
   }
 
   confirmQuestionnaire() {
-    this.toastr.success("Congrate , You finish the Questionnaire ....");
+    this.toastr.success("Congrats , You finish the Questionnaire ....");
     setTimeout(() => {
       window.location.reload();
     }, 3000);

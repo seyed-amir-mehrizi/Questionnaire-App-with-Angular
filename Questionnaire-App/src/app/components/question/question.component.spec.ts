@@ -7,8 +7,12 @@ describe('QuestionComponent', () => {
     beforeAll(() => {
         component = new QuestionComponent(null);
     });
-    it('should check if the next button incerment currentQuestionIndex',()=>{
-        component.prev();
-        expect(component.currentQuestionIndex).toBe(-1);
-    })
+    // it('should check if the prev button decrement currentQuestionIndex',()=>{
+    //     const childComponent = jasmine.createSpyObj('cardContainer', ['namebutton']);
+    //     component.prev();
+    //     component.namebutton = childComponent;
+    //     expect(component.currentQuestionIndex).toBe(-1);
+    //     expect(component.disabledNextButton).toBe(false);
+
+    // });
 });
