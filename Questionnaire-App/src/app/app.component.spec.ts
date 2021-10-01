@@ -10,27 +10,24 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-       
+
       ],
       declarations: [
         AppComponent
       ],
-      providers:[
+      providers: [
         QuestionsService
       ]
     }).compileComponents();
   });
   it('should not return empty data when call the Question service to get data', () => {
     let fixture = TestBed.createComponent(AppComponent);
-    let component:AppComponent = fixture.debugElement.componentInstance;
-    let appService  = fixture.debugElement.injector.get(QuestionsService);
-    let stub = spyOn(appService , 'getListOfQuestions').and.callFake(()=>{
+    let component: AppComponent = fixture.debugElement.componentInstance;
+    let appService = fixture.debugElement.injector.get(QuestionsService);
+    let stub = spyOn(appService, 'getListOfQuestions').and.callFake(() => {
       return of([])
     });
     component.getListOfAllQuestions();
     expect(component.listOfQuestions).not.toEqual([]);
   });
-
-  
-
 });
