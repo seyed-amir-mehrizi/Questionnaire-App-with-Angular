@@ -16,7 +16,7 @@
                 <span *ngSwitchCase="'multiple-choice'" class="w-100">
                     <div class="w-100 p-1 my-2" *ngFor="let item of question.choices; let i=index">
                         <div class="card-body py-1">
-                            <label class="form-check-label" for="{{i}}">
+                            <label class="form-check-label cursor-pointer" for="{{i}}">
                                 <input type="radio" class="form-check-input" id="{{i}}" name="optradio"
                                     (change)="onItemChange(i)" [checked]="item.selected"
                                     value="{{item.value}}">{{item.label}}

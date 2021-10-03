@@ -14,7 +14,7 @@
   }
 
   .slide_next{
-    animation: slideNext 0.7s ease-in;
+    animation: slideNext 1.2s ease-in;
   }
 
   @keyframes slideNext {
@@ -40,4 +40,8 @@
       transform: skewX(0deg);
 
     }
+  }
+
+  .cursor-pointer{
+    cursor: pointer;
   }
