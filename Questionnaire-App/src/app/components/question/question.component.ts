@@ -32,12 +32,12 @@ export class QuestionComponent implements OnInit {
     this.currentQuestionIndex++;
     this.disabledPrevButton = false;
     this.disabledNextButton = true;
-    if ((this.currentQuestionIndex + 1) === this.questions.length) {
-      this.disabledNextButton = true;
-    }
     this.checkQuestionType(question , choices);
     this.calculateProgressBarPercentage();
     this.setupForAnimation();
+    if ((this.currentQuestionIndex+1 ) === this.questions.length) {
+      this.disabledNextButton = true;
+    }
   }
   prev() {
     this.currentQuestionIndex--;
